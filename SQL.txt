@@ -76,6 +76,23 @@ SELECT Articles.id AS 'ARTICLE ID', Articles. title AS 'TITLE', Users.user_name 
     WHERE Users.id = 8 AND Articles.author_id = Users.id
     GROUP BY Articles.id, Articles.title, Articles.a_text, Users.user_name
 
+3.  Напишите запрос для получения записи автора с самым большим количеством статей и комментариев.
+
+//собираю временную таблицу и дальше суммирую в ней.
+
+SELECT Articles.author_id AS "ID", COUNT(Articles.a_text) AS 'ART', COUNT (Comments.autor_id) AS 'COMN'
+INTO #TEMP
+FROM 
+    Articles LEFT OUTER JOIN Comments ON Articles.id = Comments.article_id
+GROUP BY Articles.author_id
+
+SELECT TOP 1 WITH TIES 
+Users.user_name , (#TEMP.ART + #TEMP.COMN) AS 'SUM'
+FROM #TEMP INNER JOIN Users ON #TEMP.ID = Users.id
+GROUP BY Users.id, Users.user_name, #TEMP.ART, #TEMP.COMN
+ORDER BY SUM DESC
+
+
 
 4. Напишите запрос для получения id статей в тексте комментария к которым содержится слово vulputate.
 
