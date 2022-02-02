@@ -1,0 +1,84 @@
+CREATE TABLE Users(
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    user_name VARCHAR(100) NOT NULL,
+    e_mail VARCHAR(100) NOT NULL
+
+)
+
+
+
+CREATE TABLE Articles (
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    title VARCHAR(100) NOT NULL,
+    a_text VARCHAR(100) NOT NULL,
+    author_id INT ,
+    FOREIGN KEY (author_id) REFERENCES Users(id) ON DELETE CASCADE
+)
+
+CREATE TABLE Comments(
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    article_id INT,
+    autor_id INT,
+    comment VARCHAR(500),
+    FOREIGN KEY (article_id) REFERENCES Articles(id),
+    FOREIGN KEY (autor_id) REFERENCES Users(id) ON DELETE CASCADE
+)
+
+INSERT INTO Users (user_name, e_mail)
+VALUES
+('Desirae Cruz', 'faucibus.id.libero@yahoo.org'),
+('Jamal Kelly', 'nulla.donec@protonmail.ca'),
+('Clio Juarez', 'leo.morbi.neque@hotmail.org'),
+('Macaulay Barrera', 'non.leo@aol.net'),
+('Fuller Raymond', 'integer@google.org'),
+('Lawrence Gilbert', 'facilisis.facilisis@google.ca'),
+('Marsden Gillespie', 'habitant.morbi@protonmail.edu'),
+('Octavius Blake', 'maecenas@hotmail.couk'),
+('Deirdre Herrera', 'et.magnis@protonmail.edu'),
+('Amelia Fuller', 'est.nunc@outlook.edu')
+
+INSERT INTO Articles (title, a_text, author_id)
+VALUES
+('gravida non,', 'malesuada vel, venenatis vel, faucibus id,', 5),
+('sem ut', 'adipiscing, enim mi tempor lorem, eget mollis', 8),
+('vel turpis.', 'velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque', 8),
+('at lacus.', 'placerat eget, venenatis a, magna. Lorem ipsum dolor sit', 9),
+('a mi', 'Sed nec metus facilisis lorem tristique aliquet. Phasellus fermentum convallis', 10),
+('ante dictum', 'feugiat tellus lorem eu metus. In lorem. Donec', 7),
+('tortor at', 'non enim. Mauris quis turpis vitae purus gravida', 2),
+('lorem, vehicula', 'et, rutrum eu, ultrices sit amet, risus.', 6),
+('aliquet diam.', 'mattis ornare, lectus ante dictum mi,', 1),
+('dolor sit', 'condimentum eget, volutpat ornare, facilisis eget, ipsum.', 5)
+
+INSERT INTO Comments (article_id, autor_id, comment)
+VALUES
+(8, 4, 'mollis vitae, posuere at, velit. Cras'),
+(7,2, 'risus. Nulla eget metus eu erat semper rutrum. Fusce'),
+(5,4, 'a nunc. In at pede. Cras vulputate velit eu sem.'),
+(5, 3, 'hendrerit neque. In ornare sagittis felis. Donec tempor, est'),
+(1, 2, 'molestie arcu. Sed eu nibh vulputate mauris'),
+(6, 7, 'orci luctus et'),
+(3, 3, 'eu turpis. Nulla'),
+(4, 7, 'Sed neque. Sed eget lacus.'),
+(7, 8, 'diam dictum sapien. Aenean massa. Integer vitae'),
+(4, 6, 'non, egestas a, dui. Cras')
+
+
+
+
+
+2.
+
+SELECT Articles.id AS 'ARTICLE ID', Articles. title AS 'TITLE', Users.user_name AS 'AUTHOR', Articles.a_text AS 'TEXT' , COUNT (Comments.article_id) AS 'COMMENTS COUNT'
+    FROM Comments RIGHT OUTER JOIN Articles ON Articles.id = Comments.article_id, Users
+    WHERE Users.id = 8 AND Articles.author_id = Users.id
+    GROUP BY Articles.id, Articles.title, Articles.a_text, Users.user_name
+
+
+4.
+
+SELECT Article_id AS 'ART ID'
+FROM Comments
+WHERE Comments.comment LIKE '%vulputate%'
+
+
