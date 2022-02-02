@@ -1,3 +1,5 @@
+1. Создать таблицы и заполнить их следующими данными 
+
 CREATE TABLE Users(
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     user_name VARCHAR(100) NOT NULL,
@@ -67,7 +69,7 @@ VALUES
 
 
 
-2.
+2. Напишите запрос для получения всех статей автора с id 8
 
 SELECT Articles.id AS 'ARTICLE ID', Articles. title AS 'TITLE', Users.user_name AS 'AUTHOR', Articles.a_text AS 'TEXT' , COUNT (Comments.article_id) AS 'COMMENTS COUNT'
     FROM Comments RIGHT OUTER JOIN Articles ON Articles.id = Comments.article_id, Users
@@ -75,10 +77,16 @@ SELECT Articles.id AS 'ARTICLE ID', Articles. title AS 'TITLE', Users.user_name 
     GROUP BY Articles.id, Articles.title, Articles.a_text, Users.user_name
 
 
-4.
+4. Напишите запрос для получения id статей в тексте комментария к которым содержится слово vulputate.
 
 SELECT Article_id AS 'ART ID'
 FROM Comments
 WHERE Comments.comment LIKE '%vulputate%'
+
+5. Напишите запрос удаления всех статей и комментариев автора с email: habitant.morbi@protonmail.edu
+
+//cascade delete
+DELETE FROM Users
+Where Users.e_mail = 'habitant.morbi@protonmail.edu'
 
 
